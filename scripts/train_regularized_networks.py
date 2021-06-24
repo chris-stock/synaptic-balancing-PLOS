@@ -18,7 +18,6 @@ l2_reg_scale=np.array([0.], dtype=float)
 
 # N = 256
 N = 500
-
 n_iter = 6000
 learning_rate = 5e-3
 
@@ -62,7 +61,7 @@ n_trials = 10000 # number of trials to generate of the task
 ####  DATA PATHS
 THIS = 'N-{}_ctx-noise-{}_input-noise-{}'.format(
     N,
-    contex_params['noise'],
+    context_params['noise'],
     input_params['noise']
     )
 data_dir = '../data/neural-gradients-regularized-training/'
