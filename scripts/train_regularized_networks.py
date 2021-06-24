@@ -11,33 +11,16 @@ import pickle as pkl
 train_results = None # will be defined and used later by rnn.train
 
 
-####  DATA PATHS
-THIS = '07'
-data_dir = '../data/neural-gradients-regularized-training/'
-trial_fpath = join(data_dir, 'integration_trials_{}.pkl'.format(THIS))
-fig_dir = '../figures_new/trained-networks'
+### NETWORK & TRAINING PARAMETERS
 
-data_dir = '../data/neural-gradients-regularized-training/'
-data_fpath = os.path.join(data_dir, 'imbalances-during-regularized-training-{}.pkl'.format(THIS))
+# l2_reg_scale = np.array([0., .1, .3], dtype=float)
+l2_reg_scale=np.array([0.], dtype=float)
 
+# N = 256
+N = 500
 
-
-### PLOTTING CODE
-yellow_rgb = np.array([251, 176, 59])/256.
-purple_rgb = np.array([102, 45, 145])/256.
-red_rgb = np.array([193, 39, 45])/256.
-teal_rgb = np.array([0, 169, 157])/256.
-
-def plot_performance(rnn, ntrials=24):
-    fig, axes = plt.subplots(2, 4, sharex=True, sharey=True)
-    for _ in range(ntrials):
-        result, target = rnn.simulate(trial_generator=task.generate_all_conditions)    
-        for i, ax in enumerate(axes.ravel()):
-            ax.plot(result['outputs'][i][0], c='darkblue', alpha=.7)
-            ax.plot(result['outputs'][i][1], c='orange', alpha=.7)
-            ax.set_title('target: {}'.format(np.argmax(target[i, :,-1])))
-    fig.tight_layout()
-
+n_iter = 6000
+learning_rate = 5e-3
 
 
 ### TRIAL PARAMS
@@ -76,14 +59,36 @@ task_params = {
 
 n_trials = 10000 # number of trials to generate of the task
 
+####  DATA PATHS
+THIS = 'N-{}_ctx-noise-{}_input-noise-{}'.format(
+    N,
+    contex_params['noise'],
+    input_params['noise']
+    )
+data_dir = '../data/neural-gradients-regularized-training/'
+trial_fpath = join(data_dir, 'integration_trials_{}.pkl'.format(THIS))
+fig_dir = '../figures_new/trained-networks'
 
-### NETWORK & TRAINING PARAMETERS
+data_dir = '../data/neural-gradients-regularized-training/'
+data_fpath = os.path.join(data_dir, 'imbalances-during-regularized-training-{}.pkl'.format(THIS))
 
-l2_reg_scale = np.array([0., .1, .3], dtype=float)
-N = 256
 
-n_iter = 60
-learning_rate = 5e-3
+
+### PLOTTING CODE
+yellow_rgb = np.array([251, 176, 59])/256.
+purple_rgb = np.array([102, 45, 145])/256.
+red_rgb = np.array([193, 39, 45])/256.
+teal_rgb = np.array([0, 169, 157])/256.
+
+def plot_performance(rnn, ntrials=24):
+    fig, axes = plt.subplots(2, 4, sharex=True, sharey=True)
+    for _ in range(ntrials):
+        result, target = rnn.simulate(trial_generator=task.generate_all_conditions)    
+        for i, ax in enumerate(axes.ravel()):
+            ax.plot(result['outputs'][i][0], c='darkblue', alpha=.7)
+            ax.plot(result['outputs'][i][1], c='orange', alpha=.7)
+            ax.set_title('target: {}'.format(np.argmax(target[i, :,-1])))
+    fig.tight_layout()
 
 
 ### GENERATE TRIALS
@@ -96,7 +101,6 @@ with open(trial_fpath, 'wb') as f:
 
 
 ### TRAIN NETWORKS
-
 
 def train_with_zen_regularization(N, l2_rate, initial_weights=None, learning_rate=1e-2, niter=1600):
     calc_regularizer = lambda rate: no_regularizer if rate==0 else frob_regularizer(l2_rate)
