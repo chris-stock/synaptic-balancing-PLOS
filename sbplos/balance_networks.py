@@ -17,8 +17,8 @@ from scipy.ndimage import gaussian_filter1d
 
 
 data_dir ='/home/chris/scratch/synaptic-balancing-PLOS' \
-    '/regularized_network_training/data' \
-    'N-256_context-noise-0.3_input-noise-0.3_2021-06-25T04:16:43.426186'
+    '/regularized_network_training/' \
+    'N-256_context-noise-0.3_input-noise-0.3_2021-06-25T04:16:43.426186/data'
 weight_fname = 'trained_network.pkl'
 trial_fname = 'trials.pkl'
 output_data_path = join(data_dir,'balanced_network.pkl')
