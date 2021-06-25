@@ -17,15 +17,15 @@ train_results = None # will be defined and used later by rnn.train
 l2_reg_scale = np.array([0., .1, .3], dtype=float)
 # l2_reg_scale=np.array([0.], dtype=float)
 
-# N = 256
-N = 500
-n_iter = 6000 #3000 #6000
-learning_rate = 5e-3
+N = 256
+# N = 500
+n_iter = 3000 #3000 #6000
+learning_rate = 1e-2 #5e-3
 
 
 ### TRIAL PARAMS
 context_params = {
-    'noise': .1,
+    'noise': .3,
     'signal': 1,
     'num': 2,
     'onset': {
@@ -39,7 +39,7 @@ context_params = {
 }
 
 input_params = {
-    'noise': .1, #1
+    'noise': .3, #1
     'signal': 1,
     'num': 2,    'onset': {
         'low': 0,
