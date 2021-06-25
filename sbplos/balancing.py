@@ -164,9 +164,10 @@ if __name__ == '__main__':
         if (f.startswith(run_prefix)
         and not os.path.exists(
             os.path.join(project_dir, f, 'data', 'balanced_network.pkl')
+
         ))
     ]
 
-    for data_dir in dirs_for_processing:
-        run_balancing(os.path.join(project_dir, data_dir))
+    for run_dir in dirs_for_processing:
+        run_balancing(os.path.join(project_dir, run_dir, 'data'))
 
