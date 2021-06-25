@@ -7,8 +7,8 @@ from os.path import join, abspath
 import os
 import datetime
 
-from .trials import generate_task_params, generate_trials
-from .training import train
+from sbplos.trials import generate_task_params, generate_trials
+from sbplos.training import train
 
 
 
