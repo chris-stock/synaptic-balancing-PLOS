@@ -14,10 +14,10 @@ run_dir = os.path.expanduser(
     '~/scratch/synaptic-balancing-PLOS/regularized_network_training/'
     'N-256_context-noise-0.3_input-noise-0.3_2021-06-25T04:16:43.426186'
 )
-fig_dir = os.path.join(run_dir, 'figures')
 data_dir = os.path.join(run_dir, 'data')
 fname = os.path.join(data_dir, 'trained_network.pkl')
-
+fig_dir = os.path.join(run_dir, 'figures')
+fig_path =os.path.join(fig_dir, 'neural_gradients_during_training.pdf')
 
 ### LOAD DATA
 with open(fname, 'rb') as f:
