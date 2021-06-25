@@ -21,8 +21,7 @@ def run_balancing(
     num_eval_trials=300,
     dt=0.1,
     noise_levels=np.arange(0.4, step=0.5),
-    balancing_T_max = 3000
-
+    balancing_T_max=3000
 ):
 
     ### LOAD DATA
@@ -169,5 +168,8 @@ if __name__ == '__main__':
     ]
 
     for run_dir in dirs_for_processing:
-        run_balancing(os.path.join(project_dir, run_dir, 'data'))
+        run_balancing(
+            os.path.join(project_dir, run_dir, 'data'),
+            noise_levels=np.arange(0.3, step=0.03)
+        )
 
