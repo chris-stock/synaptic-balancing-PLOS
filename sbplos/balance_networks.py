@@ -17,10 +17,11 @@ from scipy.ndimage import gaussian_filter1d
 
 
 data_dir ='/home/chris/scratch/synaptic-balancing-PLOS' \
-    '/regularized_network_training/' \
-    'N-256_context-noise-0.3_input-noise-0.3_2021-06-25T04:16:43.426186/data'
+    '/regularized_network_training/data' \
+    'N-256_context-noise-0.3_input-noise-0.3_2021-06-25T04:16:43.426186'
 weight_fname = 'trained_network.pkl'
 trial_fname = 'trials.pkl'
+output_data_path = join(data_dir,'balanced_network.pkl')
 
 with open(join(data_dir, weight_fname), 'rb') as f:
     weight_data = pkl.load(f)
@@ -91,7 +92,8 @@ print(eval_trials, eval_trials.shape(1))
 # run original network with and without nosie
 i=0
 rnn_orig = rnns[i]
-noise_levels = np.arange(0.7, step= 0.05)
+# noise_levels = np.arange(0.7, step= 0.05)
+noise_levels = np.arange(0.35, step= 0.05)
 
 train_trials_orig = rnnops.trial.run_neural_dynamics(
     rnn_orig,
@@ -140,11 +142,17 @@ eval_trials_balanced = [
 
 ### COMPARE TRIAL-AVERAGED RESPONSES
 
+from rnnops.trial import trial_apply
+
+trials_orig_mean = [trial_apply(tr, np.mean) for tr in eval_trials_orig]
+trials_balanced_mean = [trial_apply(tr, np.mean) for tr in eval_trials_balanced]
+
 
 ### SAVE DATA FOR PLOTTING
 
 # save trial data
 
+x_std_dev = np.std(eval_trials_orig[0].hiddens)
 trial_data = {
     'trials_orig_mean': trials_orig_mean,
     'trials_balanced_mean': trials_balanced_mean,
@@ -153,6 +161,6 @@ trial_data = {
     'x_std_dev': x_std_dev,
 }
 
-trial_data_path = join(data_dir, 'noisy_trials_03_4.pkl')
+trial_data_path = join(output_data_path)
 with open(trial_data_path,'wb') as f:
     pkl.dump(trial_data, f, -1)
