@@ -6,7 +6,7 @@ from zen.components import relu
 import pickle as pkl
 
 
-def train_with_zen_regularization(
+def train_with_regularization(
     task,
     N,
     l2_rate,
@@ -94,11 +94,12 @@ def train(
             'niter': n_iter,
             'initial_weights': initial_weights,
             'learning_rate': learning_rate,
+            'task': task,
         } for l2_reg in l2_reg_scale
     ]
 
     # call the training routine
-    results = [train_with_zen_regularization(**args) for args in train_args]
+    results = [train_with_regularization(**args) for args in train_args]
     rnns, train_results = zip(*results)
 
     # save data

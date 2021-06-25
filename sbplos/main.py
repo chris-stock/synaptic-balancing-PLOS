@@ -3,7 +3,7 @@ Main routine
 """
 
 import numpy as np
-from os.path import join, abspath
+from os.path import join
 import os
 import datetime
 
@@ -15,16 +15,16 @@ from sbplos.training import train
 ### NETWORK & TRAINING PARAMETERS
 
 # task parameters
-input_noise = 0.1
-context_noise = 0.1
+input_noise = 0.3
+context_noise = 0.3
 num_timesteps = 50
 
 # network parameters
-N = 256 #500
+N = 256
 
 # training parameters
 l2_reg_scale = np.array([0., .1, .3], dtype=float)
-n_iter = 60 #6000 #3000 #6000
+n_iter = 6000
 learning_rate = 5e-3
 
 # evaluation parameters
@@ -40,9 +40,13 @@ run_id = 'N-{}_context-noise-{}_input-noise-{}_{}'.format(
     datetime.datetime.utcnow().isoformat()
     )
 
-scratch_dir = abspath('~/scratch')
-project_dir = join(scratch_dir, 'synaptic-balancing-PLOS')
-run_dir = join(project_dir,'trained_networks_{}'.format(run_id))
+scratch_dir = os.path.expanduser('~/scratch')
+run_dir = join(
+    scratch_dir,
+    'synaptic-balancing-PLOS',
+    'regularized_network_training',
+    run_id
+)
 os.makedirs(run_dir, exist_ok=True)
 
 data_dir = join(run_dir, 'data')
