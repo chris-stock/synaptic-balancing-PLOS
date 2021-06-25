@@ -19,7 +19,7 @@ l2_reg_scale = np.array([0., .1, .3], dtype=float)
 
 # N = 256
 N = 500
-n_iter = 60 #3000 #6000
+n_iter = 6000 #3000 #6000
 learning_rate = 5e-3
 
 
