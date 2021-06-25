@@ -11,9 +11,16 @@ from scipy.ndimage import gaussian_filter1d
 
 
 ### LOAD DATA
-data_dir = '../data/neural-gradients-regularized-training/'
-weight_fname = 'imbalances-during-regularized-training-03.pkl'
-trial_fname = 'integration_trials.pkl'
+# data_dir = '../data/neural-gradients-regularized-training/'
+# weight_fname = 'imbalances-during-regularized-training-03.pkl'
+# trial_fname = 'integration_trials.pkl'
+
+
+data_dir ='/home/chris/scratch/synaptic-balancing-PLOS' \
+    '/regularized_network_training/' \
+    'N-256_context-noise-0.3_input-noise-0.3_2021-06-25T04:16:43.426186/data'
+weight_fname = 'trained_network.pkl'
+trial_fname = 'trials.pkl'
 
 with open(join(data_dir, weight_fname), 'rb') as f:
     weight_data = pkl.load(f)
