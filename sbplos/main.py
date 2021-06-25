@@ -24,7 +24,7 @@ N = 256 #500
 
 # training parameters
 l2_reg_scale = np.array([0., .1, .3], dtype=float)
-n_iter = 6000 #3000 #6000
+n_iter = 60 #6000 #3000 #6000
 learning_rate = 5e-3
 
 # evaluation parameters
@@ -72,5 +72,5 @@ train(
     l2_reg_scale
 )
 
-###
+### CALCULATE NEURAL GRADIENTS DURING TRAINING
 
