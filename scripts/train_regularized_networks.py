@@ -157,10 +157,10 @@ save_data = {
         np.linalg.norm(res['zen_imbalances'], axis=1) for res in train_results
     ],
     'loss': [
-        np.linalg.norm(res['loss'], axis=1) for res in train_results
+        res['loss'] for res in train_results
     ],
     'zen_cost': [
-        np.linalg.norm(res['zen_cost'], axis=1) for res in train_results
+        res['zen_cost'] for res in train_results
     ],
     'initial_final_weights': [
         (res['weights'][0], res['weights'][-1]) for res in train_results
