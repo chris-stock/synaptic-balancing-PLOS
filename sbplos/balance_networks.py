@@ -89,31 +89,21 @@ print(train_trials, train_trials.shape(1))
 print(eval_trials, eval_trials.shape(1))
 
 
-# run original network with and without nosie
-i=0
-rnn_orig = rnns[i]
+### RUN BALANCING
+
+rnn_orig = rnns[-1]
 # noise_levels = np.arange(0.7, step= 0.05)
-noise_levels = np.arange(0.35, step= 0.05)
+noise_levels = np.arange(0.4, step=0.5)
 
 train_trials_orig = rnnops.trial.run_neural_dynamics(
     rnn_orig,
     train_trials,
     noise_std=0)
 
-eval_trials_orig = [
-    rnnops.trial.run_neural_dynamics(
-        rnn_orig,
-        eval_trials,
-        noise_std=s
-    ) for s in noise_levels]
-
-
-### RUN BALANCING
-
 from rnnops.ops.balancing import robustness_cost_fn
 from rnnops.ops.balancing import solve_balancing
 
-T_max=1000
+T_max=3000
 
 cost_fn = robustness_cost_fn(
     train_trials_orig,
@@ -130,6 +120,20 @@ rnn_balanced, opt_results = solve_balancing(
 )
 print({k: opt_results[k] for k in ['c0', 'cf']})
 
+
+# EVALUATE ORIGINAL AND BALANCED NETWORK IN NOISY REGIME
+train_trials_orig = rnnops.trial.run_neural_dynamics(
+    rnn_orig,
+    train_trials,
+    noise_std=0)
+
+eval_trials_orig = [
+    rnnops.trial.run_neural_dynamics(
+        rnn_orig,
+        eval_trials,
+        noise_std=s
+    ) for s in noise_levels]
+
 # run balanced network on evaluation trials
 
 eval_trials_balanced = [
@@ -141,9 +145,7 @@ eval_trials_balanced = [
 
 
 ### COMPARE TRIAL-AVERAGED RESPONSES
-
 from rnnops.trial import trial_apply
-
 trials_orig_mean = [trial_apply(tr, np.mean) for tr in eval_trials_orig]
 trials_balanced_mean = [trial_apply(tr, np.mean) for tr in eval_trials_balanced]
 

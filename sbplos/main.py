@@ -79,6 +79,6 @@ train_results = train(
 
 
 ### CALCULATE NEURAL GRADIENTS DURING TRAINING
-gf_shuff_rows, gf_true = calculate_neural_gradients(
-    train_results
-)
+# gf_shuff_rows, gf_true = calculate_neural_gradients(
+#     train_results
+# )
