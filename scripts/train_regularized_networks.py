@@ -13,12 +13,12 @@ train_results = None # will be defined and used later by rnn.train
 
 ### NETWORK & TRAINING PARAMETERS
 
-# l2_reg_scale = np.array([0., .1, .3], dtype=float)
-l2_reg_scale=np.array([0.], dtype=float)
+l2_reg_scale = np.array([0., .1, .3], dtype=float)
+# l2_reg_scale=np.array([0.], dtype=float)
 
 # N = 256
 N = 500
-n_iter = 6000
+n_iter = 600 #3000 #6000
 learning_rate = 5e-3
 
 
@@ -70,25 +70,6 @@ fig_dir = '../figures_new/trained-networks'
 
 data_dir = '../data/neural-gradients-regularized-training/'
 data_fpath = os.path.join(data_dir, 'imbalances-during-regularized-training-{}.pkl'.format(THIS))
-
-
-
-### PLOTTING CODE
-yellow_rgb = np.array([251, 176, 59])/256.
-purple_rgb = np.array([102, 45, 145])/256.
-red_rgb = np.array([193, 39, 45])/256.
-teal_rgb = np.array([0, 169, 157])/256.
-
-def plot_performance(rnn, ntrials=24):
-    fig, axes = plt.subplots(2, 4, sharex=True, sharey=True)
-    for _ in range(ntrials):
-        result, target = rnn.simulate(trial_generator=task.generate_all_conditions)    
-        for i, ax in enumerate(axes.ravel()):
-            ax.plot(result['outputs'][i][0], c='darkblue', alpha=.7)
-            ax.plot(result['outputs'][i][1], c='orange', alpha=.7)
-            ax.set_title('target: {}'.format(np.argmax(target[i, :,-1])))
-    fig.tight_layout()
-
 
 ### GENERATE TRIALS
 task = zen.tasks.IntegrationTask(**task_params)
@@ -170,10 +151,18 @@ rnns, train_results = zip(*results)
 
 ### SAVE DATA
 save_data = {
-    'g_norm': [np.linalg.norm(res['zen_imbalances'], axis=1) for res in train_results],
-    'loss': [np.linalg.norm(res['loss']) for res in train_results],
-    'zen_cost': [np.linalg.norm(res['zen_cost']) for res in train_results],
-    'initial_final_weights': [(res['weights'][0], res['weights'][-1]) for res in train_results],    
+    'g_norm': [
+        np.linalg.norm(res['zen_imbalances'], axis=1) for res in train_results
+    ],
+    'loss': [
+        np.linalg.norm(res['loss'], axis=1) for res in train_results
+    ],
+    'zen_cost': [
+        np.linalg.norm(res['zen_cost'], axis=1) for res in train_results
+    ],
+    'initial_final_weights': [
+        (res['weights'][0], res['weights'][-1]) for res in train_results
+    ],
     'l2_reg_scale': l2_reg_scale,
 }
 
