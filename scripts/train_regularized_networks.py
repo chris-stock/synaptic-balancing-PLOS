@@ -8,6 +8,7 @@ from zen.components import relu, frob_regularizer, no_regularizer
 from os.path import join
 import os
 import pickle as pkl
+import datetime
 train_results = None # will be defined and used later by rnn.train
 
 
@@ -59,10 +60,11 @@ task_params = {
 n_trials = 10000 # number of trials to generate of the task
 
 ####  DATA PATHS
-THIS = 'N-{}_ctx-noise-{}_input-noise-{}'.format(
+THIS = 'N-{}_ctx-noise-{}_input-noise-{}_{}'.format(
     N,
     context_params['noise'],
-    input_params['noise']
+    input_params['noise'],
+    datetime.datetime.utcnow().isoformat()
     )
 data_dir = '../data/neural-gradients-regularized-training/'
 trial_fpath = join(data_dir, 'integration_trials_{}.pkl'.format(THIS))
