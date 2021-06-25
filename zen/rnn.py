@@ -153,6 +153,9 @@ class ZenRNN(object):
         return train_op
 
 
+    def close_session(self):
+        self.sess.close()
+
     def train(self, train_op, niter, learning_rate, probe_inputs=None, batch_size=1,
         trial_generator=None, append_to=None, save_weights=False, save_activity=False, save_zen=True):
         

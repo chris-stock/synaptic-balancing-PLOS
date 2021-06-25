@@ -62,6 +62,9 @@ def train_with_zen_regularization(
     # train network
     train_results = rnn.train(**train_args)
 
+    # close tensorflow session
+    rnn.close_session()
+
     return rnn, train_results
 
 
@@ -118,5 +121,4 @@ def train(
 
     with open(data_path, 'wb') as f:
         pkl.dump(save_data, f, -1)
-
 

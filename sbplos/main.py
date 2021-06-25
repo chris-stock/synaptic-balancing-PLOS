@@ -7,7 +7,8 @@ from os.path import join, abspath
 import os
 import datetime
 
-from .trials import generate_task_params
+from .trials import generate_task_params, generate_trials
+from .training import train
 
 
 
@@ -25,7 +26,9 @@ N = 256 #500
 l2_reg_scale = np.array([0., .1, .3], dtype=float)
 n_iter = 6000 #3000 #6000
 learning_rate = 5e-3
-n_trials = 10000 # number of trials to generate of the task
+
+# evaluation parameters
+n_trials = 1000 # number of trials to generate of the task
 
 
 ### DIRECTORY STRUCTURE
@@ -47,8 +50,27 @@ figures_dir = join(run_dir, 'figures')
 os.mkdir(data_dir)
 os.mkdir(figures_dir)
 
-trial_fpath = join(data_dir, 'trials.pkl')
-trained_network_fpath = join(data_dir, 'trained_network.pkl')
+trial_data_path = join(data_dir, 'trials.pkl')
+trained_network_data_path = join(data_dir, 'trained_network.pkl')
 
-### TRAINING
+
+### GENERATE TASK & TRIALS
 task_params = generate_task_params(input_noise, context_noise)
+task = generate_trials(
+    trial_data_path,
+    n_trials,
+    task_params
+)
+
+### TRAIN NETWORKS
+train(
+    trained_network_data_path,
+    task,
+    N,
+    n_iter,
+    learning_rate,
+    l2_reg_scale
+)
+
+###
+

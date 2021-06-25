@@ -52,10 +52,16 @@ def generate_trials(
     n_trials,
     task_params
 ):
+
+    # generate trials from task
     task = zen.tasks.IntegrationTask(**task_params)
     trials = [
         task.generate_all_conditions(return_labels=True)
         for _ in range(n_trials)
     ]
+
+    # write trials to file
     with open(trial_data_path, 'wb') as f:
         pkl.dump(trials, f, -1)
+
+    return task

@@ -4,7 +4,7 @@ import pickle as pkl
 import matplotlib.pyplot as plt
 
 ####  DATA PATHS
-THIS = 'N-500_ctx-noise-0.1_input-noise-0.1_2021-06-25T02:04:03.366540'
+THIS = 'N-256_ctx-noise-0.3_input-noise-0.3_2021-06-25T03:20:58.274945'
 data_dir = '../data/neural-gradients-regularized-training/'
 fig_dir = '../figures_new/trained-networks'
 fig_path='g-norm-regularized-training-{}.pdf'.format(THIS)
