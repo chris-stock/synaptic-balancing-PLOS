@@ -168,4 +168,5 @@ if __name__ == '__main__':
     ]
 
     for data_dir in dirs_for_processing:
-        run_balancing(data_dir)
+        run_balancing(os.path.join(project_dir, data_dir))
+
