@@ -3,9 +3,6 @@ import rnnops
 import pickle as pkl
 
 from os.path import join
-from scipy.io import loadmat
-import matplotlib.pyplot as plt
-
 import numpy as np
 from scipy.ndimage import gaussian_filter1d
 
@@ -15,21 +12,19 @@ from scipy.ndimage import gaussian_filter1d
 # weight_fname = 'imbalances-during-regularized-training-03.pkl'
 # trial_fname = 'integration_trials.pkl'
 
-
-data_dir ='/home/chris/scratch/synaptic-balancing-PLOS' \
+data_dir ='/Users/chris/scratch/synaptic-balancing-PLOS' \
     '/regularized_network_training/' \
     'N-256_context-noise-0.3_input-noise-0.3_2021-06-25T04:16:43.426186/data'
 weight_fname = 'trained_network.pkl'
 trial_fname = 'trials.pkl'
-output_data_path = join(data_dir,'balanced_network.pkl')
-
+output_data_path = join(data_dir, 'balanced_network.pkl')
 with open(join(data_dir, weight_fname), 'rb') as f:
     weight_data = pkl.load(f)
 with open(join(data_dir, trial_fname), 'rb') as f:
     trial_data = pkl.load(f)    
 
 
-### 
+### create network and trial data structures
 weight_list = weight_data['initial_final_weights']
 rnns = []
 
