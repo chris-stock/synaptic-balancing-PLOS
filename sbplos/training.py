@@ -123,3 +123,4 @@ def train(
     with open(data_path, 'wb') as f:
         pkl.dump(save_data, f, -1)
 
+    return train_results

@@ -4,11 +4,19 @@ import pickle as pkl
 import matplotlib.pyplot as plt
 
 ####  DATA PATHS
-THIS = 'N-256_ctx-noise-0.3_input-noise-0.3_2021-06-25T03:20:58.274945'
-data_dir = '../data/neural-gradients-regularized-training/'
-fig_dir = '../figures_new/trained-networks'
-fig_path='g-norm-regularized-training-{}.pdf'.format(THIS)
-fname = os.path.join(data_dir, 'imbalances-during-regularized-training-{}.pkl'.format(THIS))
+# THIS = 'N-256_ctx-noise-0.3_input-noise-0.3_2021-06-25T03:20:58.274945'
+# data_dir = '../data/neural-gradients-regularized-training/'
+# fig_dir = '../figures_new/trained-networks'
+# fig_path='g-norm-regularized-training-{}.pdf'.format(THIS)
+# fname = os.path.join(data_dir, 'imbalances-during-regularized-training-{}.pkl'.format(THIS))
+
+run_dir = os.path.expanduser(
+    '~/scratch/synaptic-balancing-PLOS/regularized_network_training/'
+    'N-256_context-noise-0.3_input-noise-0.3_2021-06-25T04:16:43.426186'
+)
+fig_dir = os.path.join(run_dir, 'figures')
+data_dir = os.path.join(run_dir, 'data')
+fname = os.path.join(data_dir, 'trained_network.pkl')
 
 
 ### LOAD DATA

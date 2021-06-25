@@ -9,6 +9,7 @@ import datetime
 
 from sbplos.trials import generate_task_params, generate_trials
 from sbplos.training import train
+from sbplos.neural_gradients import calculate_neural_gradients
 
 
 
@@ -29,7 +30,6 @@ learning_rate = 5e-3
 
 # evaluation parameters
 n_trials = 1000 # number of trials to generate of the task
-
 
 ### DIRECTORY STRUCTURE
 
@@ -66,8 +66,9 @@ task = generate_trials(
     task_params
 )
 
+
 ### TRAIN NETWORKS
-train(
+train_results = train(
     trained_network_data_path,
     task,
     N,
@@ -76,5 +77,8 @@ train(
     l2_reg_scale
 )
 
-### CALCULATE NEURAL GRADIENTS DURING TRAINING
 
+### CALCULATE NEURAL GRADIENTS DURING TRAINING
+gf_shuff_rows, gf_true = calculate_neural_gradients(
+    train_results
+)
